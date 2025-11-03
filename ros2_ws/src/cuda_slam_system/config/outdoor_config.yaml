@@ -1,0 +1,22 @@
+# Outdoor Environment SLAM Configuration
+
+orb:
+  num_features: 2500
+  scale_factor: 1.2
+  num_levels: 8
+
+slam:
+  max_keyframes: 1000
+  keyframe_insertion_threshold: 0.8
+
+point_cloud:
+  voxel_leaf_size: 0.1
+  icp_max_correspondence_distance: 0.3
+
+lidar:
+  max_range: 100.0
+  min_range: 1.0
+
+loop_closure:
+  enabled: true
+  min_score: 0.05

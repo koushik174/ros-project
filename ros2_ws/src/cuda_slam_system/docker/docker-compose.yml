@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  cuda_slam:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: cuda_slam_system:latest
+    container_name: cuda_slam_container
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ../:/ros2_ws/src/cuda_slam_system:rw
+      - slam_data:/data
+    network_mode: host
+    privileged: true
+    stdin_open: true
+    tty: true
+    command: bash
+
+  # RViz visualization service
+  rviz:
+    image: cuda_slam_system:latest
+    container_name: slam_rviz
+    runtime: nvidia
+    environment:
+      - DISPLAY=${DISPLAY}
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    network_mode: host
+    command: ros2 run rviz2 rviz2
+    depends_on:
+      - cuda_slam
+
+volumes:
+  slam_data:
+    driver: local

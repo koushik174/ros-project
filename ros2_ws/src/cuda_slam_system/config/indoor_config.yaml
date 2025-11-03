@@ -1,0 +1,18 @@
+# Indoor Environment SLAM Configuration
+
+orb:
+  num_features: 1500
+  scale_factor: 1.2
+  num_levels: 8
+
+slam:
+  max_keyframes: 300
+  keyframe_insertion_threshold: 0.6
+
+point_cloud:
+  voxel_leaf_size: 0.03
+  icp_max_correspondence_distance: 0.05
+
+loop_closure:
+  enabled: true
+  min_score: 0.08
