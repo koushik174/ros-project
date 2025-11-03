@@ -1,0 +1,82 @@
+# Stereo Camera SLAM Configuration
+
+# Camera Parameters
+camera0:
+  type: "stereo_left"
+  fx: 718.856
+  fy: 718.856
+  cx: 607.1928
+  cy: 185.2157
+  width: 1241
+  height: 376
+  distortion:
+    k1: -0.28340811
+    k2: 0.07395907
+    p1: 0.00019359
+    p2: 0.00001762
+    k3: 0.0
+
+camera1:
+  type: "stereo_right"
+  fx: 718.856
+  fy: 718.856
+  cx: 607.1928
+  cy: 185.2157
+  width: 1241
+  height: 376
+  baseline: 0.537  # meters
+
+# ORB Feature Detector
+orb:
+  num_features: 2000
+  scale_factor: 1.2
+  num_levels: 8
+  fast_threshold: 20
+  min_fast_threshold: 7
+
+# IMU Parameters
+imu:
+  rate: 200.0  # Hz
+  accel_noise: 0.01
+  gyro_noise: 0.001
+  accel_bias: [0.0, 0.0, 0.0]
+  gyro_bias: [0.0, 0.0, 0.0]
+  T_cam_imu:  # Transformation from IMU to camera
+    rotation: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+    translation: [0.0, 0.0, 0.0]
+
+# SLAM Parameters
+slam:
+  max_keyframes: 500
+  max_map_points: 50000
+  keyframe_insertion_threshold: 0.7
+  local_mapping_keyframes: 10
+  min_tracking_quality: 0.5
+
+# Loop Closure
+loop_closure:
+  enabled: true
+  min_score: 0.05
+  min_keyframes: 10
+  consistency_threshold: 3
+
+# Point Cloud Processing
+point_cloud:
+  voxel_leaf_size: 0.05
+  statistical_outlier_k: 50
+  statistical_outlier_std: 1.0
+  icp_max_correspondence_distance: 0.1
+  icp_max_iterations: 30
+  icp_transformation_epsilon: 0.0001
+
+# Visualization
+visualization:
+  enabled: true
+  publish_rate: 10.0  # Hz
+  point_size: 2.0
+  trajectory_color: [0.0, 1.0, 0.0, 1.0]  # RGBA
+
+# CUDA Settings
+cuda:
+  enabled: true
+  device_id: 0
